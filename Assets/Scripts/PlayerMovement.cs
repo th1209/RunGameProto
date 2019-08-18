@@ -2,9 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Player))]
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
-{    void FixedUpdate()
+{   
+    #region Public Functions
+    public void Jump()
+    {
+        // TODO ジャンプ処理を実装する.
+    }
+    #endregion
+
+
+    #region Private Functions
+    private void Run()
     {
         Vector3 velocity = GetComponent<Rigidbody2D>().velocity;
         velocity.x = Mathf.Clamp(
@@ -12,6 +23,14 @@ public class PlayerMovement : MonoBehaviour
             InGameParameters.PlayerVelocityMin,
             InGameParameters.PlayerVelocityMax);
         GetComponent<Rigidbody2D>().velocity = velocity;
-        Debug.Log(GetComponent<Rigidbody2D>().isKinematic);
     }
+    #endregion
+
+
+    #region MonoBehaviour CallBacks
+    void FixedUpdate()
+    {
+        Run();
+    }
+    #endregion
 }

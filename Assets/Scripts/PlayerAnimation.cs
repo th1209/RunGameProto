@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Player))]
 public class PlayerAnimation : MonoBehaviour
 {
-    // Start is called before the first frame update
+    #region MonoBehaviour CallBacks
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         
     }
+    #endregion
 }
