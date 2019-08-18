@@ -34,6 +34,12 @@ public class Player : MonoBehaviour
 
 
     #region Private Fields
+    // 移動用コンポーネント.
+    private PlayerMovement _movementComponent = null;
+
+    // アニメーション用コンポーネント.
+    private PlayerAnimation _animationComponent = null;
+
     // 状態.
     private State _state = State.Idling;
 
@@ -71,6 +77,7 @@ public class Player : MonoBehaviour
 
     public void Jump()
     {
+        
         if (_jumpCount >= InGameParameters.MaxJumpCount) {
             return;
         }
@@ -87,12 +94,17 @@ public class Player : MonoBehaviour
             _state = State.DoubleJumping;
         }
 
-        // TODO:PlayerMovementクラスのジャンプ処理を呼び出す.
+        _movementComponent.Jump();
     }
 
     public int GetJumpCount()
     {
         return _jumpCount;
+    }
+
+    public void ResetJumpCount()
+    {
+        _jumpCount = 0;
     }
 
     public void Damaged()
@@ -125,7 +137,13 @@ public class Player : MonoBehaviour
     #region MonoBehaviour CallBacks
     void Start()
     {
-        
+        _movementComponent = GetComponent<PlayerMovement>();
+        Debug.Assert(_movementComponent != null);
+        _animationComponent = GetComponent<PlayerAnimation>();
+        Debug.Assert(_animationComponent != null);
+
+        // TODO デバッグ用の処理.後ほど､最初はIdleさせるように変更する.
+        _state = State.Running;
     }
 
     void Update()
@@ -137,15 +155,13 @@ public class Player : MonoBehaviour
                 break;
             case State.Running:
                 // TODO Animationの更新.
-                // TODO 加速する処理.
                 break;
             case State.Jumping:
-                // TODO Animationの更新.
-                // TODO 地面に付いたら状態を更新する処理.
-                break;
             case State.DoubleJumping:
                 // TODO Animationの更新.
-                // TODO 地面に付いたら状態を更新する処理.
+                if (_jumpCount <= 0) {
+                    _state = State.Running;
+                }
                 break;
             case State.Damaged:
                 // TODO Animationの更新.

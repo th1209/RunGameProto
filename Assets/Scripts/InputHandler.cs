@@ -2,24 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Player))]
-public class PlayerAnimation : MonoBehaviour
+public class InputHandler : MonoBehaviour
 {
-    #region Private Fields
+    #region Private Serialize Fields
+    [SerializeField]
     Player _player = null;
     #endregion
-
 
     #region MonoBehaviour CallBacks
     void Start()
     {
-        _player = GetComponent<Player>();
         Debug.Assert(_player != null);
     }
 
     void Update()
     {
-        
+        if (Input.GetKeyDown("space")) {
+            _player.Jump();
+        }
     }
     #endregion
 }
