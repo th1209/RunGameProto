@@ -70,6 +70,11 @@ public class Player : MonoBehaviour
         return _restInvincibleTime > 0.0f;
     }
 
+    public void Idle()
+    {
+
+    }
+
     public void Run()
     {
 
