@@ -154,9 +154,6 @@ public class Player : MonoBehaviour, IPausable
     #region MonoBehaviour CallBacks
     void Start()
     {
-        //Debug.Log(GetComponent<Rigidbody2D>().isKinematic);
-        GetComponent<Rigidbody2D>().isKinematic = true;
-
         _movementComponent = GetComponent<PlayerMovement>();
         Debug.Assert(_movementComponent != null);
         _animationComponent = GetComponent<PlayerAnimation>();
@@ -167,8 +164,6 @@ public class Player : MonoBehaviour, IPausable
 
     void Update()
     {
-        Debug.LogFormat("{0}, {1}", GetComponent<Rigidbody2D>().isKinematic, GetComponent<Rigidbody2D>().velocity);
-
         switch(_state)
         {
             case State.Idling:
