@@ -29,9 +29,13 @@ public class SceneInGameController : SingletonMonoBehaviour<SceneInGameControlle
     [SerializeField]
     private Player _player = null;
 
-    // UI管理クラス.
+    // UIレイヤ管理クラス.
     [SerializeField]
-    private SceneInGameUiController _uiController = null;
+    private UiLayers _uiLayerController = null;
+
+    // UIコールバック管理クラス.
+    [SerializeField]
+    private UiCallbacks _uiCallbackController = null;
 
     #endregion
 
@@ -48,25 +52,25 @@ public class SceneInGameController : SingletonMonoBehaviour<SceneInGameControlle
 
     public void StartGame()
     {
-        _uiController.StartGame();
+        _uiLayerController.StartGame();
         _player.Run();
     }
 
     public void ClearGame()
     {
-        _uiController.ClearGame();
+        _uiLayerController.ClearGame();
         _player.Win();
     }
 
     public void Pause()
     {
-        _uiController.Pause();
+        _uiLayerController.Pause();
         _player.Pause();
     }
 
     public void Resume()
     {
-        _uiController.Resume();
+        _uiLayerController.Resume();
         _player.Resume();
     }
 
@@ -94,7 +98,8 @@ public class SceneInGameController : SingletonMonoBehaviour<SceneInGameControlle
     {
         _state = State.NotStartd;
 
-        _uiController.Initialize();
+        _uiLayerController.Initialize();
+        _uiCallbackController.Initialize();
         _player.Idle();
     }
 
@@ -105,7 +110,8 @@ public class SceneInGameController : SingletonMonoBehaviour<SceneInGameControlle
     void Start()
     {
         Debug.Assert(_player != null);
-        Debug.Assert(_uiController != null);
+        Debug.Assert(_uiLayerController != null);
+        Debug.Assert(_uiCallbackController != null);
 
         Initialize();
     }

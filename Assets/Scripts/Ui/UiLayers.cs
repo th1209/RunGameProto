@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-// インゲームシーンのUI管理クラス.
-public class SceneInGameUiController : MonoBehaviour
+// インゲームシーンの各種UIレイヤの管理クラス.
+public class UiLayers : MonoBehaviour
 {
     #region Private Serialize Fields
 
@@ -35,6 +35,7 @@ public class SceneInGameUiController : MonoBehaviour
     public void Initialize()
     {
         Debug.Assert(_sceneController != null);
+
         Debug.Assert(_layerGameStart != null);
         Debug.Assert(_layerPause != null);
         Debug.Assert(_layerGameClear != null);
@@ -86,39 +87,5 @@ public class SceneInGameUiController : MonoBehaviour
         }
     }
 
-    #endregion
-
-
-    #region Ui Callbacks
-
-    public void OnGameStart()
-    {
-        _sceneController.StartGame();
-    }
-
-    public void OnPause()
-    {
-        _sceneController.Pause();
-    }
-
-    public void OnResume()
-    {
-        _sceneController.Resume();
-    }
-
-    public void OnRetry()
-    {
-        _sceneController.Retry();
-    }
-
-    public void OnHome()
-    {
-        _sceneController.GoToHomeScene();
-    }
-
-    #endregion
-
-
-    #region MonoBehaviour CallBacks
     #endregion
 }
