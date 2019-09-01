@@ -72,21 +72,21 @@ public class Player : MonoBehaviour
 
     public void Idle()
     {
-
+        _state = State.Idling;
     }
 
     public void Run()
     {
-
+        _state = State.Running;
     }
 
     public void Jump()
     {
-        
-        if (_jumpCount >= InGameParameters.MaxJumpCount) {
+        if (_state != State.Running && _state != State.Jumping ) {
             return;
         }
-        if (_state == State.DoubleJumping) {
+
+        if (_jumpCount >= InGameParameters.MaxJumpCount) {
             return;
         }
 
@@ -119,12 +119,14 @@ public class Player : MonoBehaviour
 
     public void Win()
     {
-
+        _state = State.Winning;
+        _movementComponent.Stop();
     }
 
     public void Lose()
     {
-        
+        _state = State.Losing;
+        _movementComponent.Stop();
     }
 
     public void Pause()
@@ -147,8 +149,7 @@ public class Player : MonoBehaviour
         _animationComponent = GetComponent<PlayerAnimation>();
         Debug.Assert(_animationComponent != null);
 
-        // TODO デバッグ用の処理.後ほど､最初はIdleさせるように変更する.
-        _state = State.Running;
+        _state = State.Idling;
     }
 
     void Update()

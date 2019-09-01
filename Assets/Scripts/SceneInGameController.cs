@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 // インゲームシーン管理クラス.
-public class SceneInGameController : MonoBehaviour
+public class SceneInGameController : SingletonMonoBehaviour<SceneInGameController>
 {
     #region Private Enums
     public enum State

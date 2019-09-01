@@ -18,6 +18,12 @@ public class PlayerMovement : MonoBehaviour
         velocity.y += InGameParameters.PlayerJumpAcceleration;
         GetComponent<Rigidbody2D>().velocity = velocity;
     }
+
+    public void Stop()
+    {
+        GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
+    }
+
     #endregion
 
 
