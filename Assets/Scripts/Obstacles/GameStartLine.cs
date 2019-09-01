@@ -5,8 +5,12 @@ using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
-public class GameClearLine : MonoBehaviour, IObstacle
+public class GameStartLine : MonoBehaviour, IObstacle
 {
+    // Debug
+    [SerializeField]
+    GameObject root = null;
+
     #region MonoBehaviour CallBacks
 
     void Start()
@@ -14,7 +18,7 @@ public class GameClearLine : MonoBehaviour, IObstacle
         ExecuteEvents.Execute<IUiParametersReceiver>(
             target: gameObject,
             eventData: null,
-            functor: (handler, eventData) => handler.OnReceiveGoalPositionMessage(gameObject.transform.position)
+            functor: (handler, eventData) => handler.OnReceiveStartPositionMessage(gameObject.transform.position)
         );
     }
 
@@ -27,10 +31,9 @@ public class GameClearLine : MonoBehaviour, IObstacle
         ExecuteEvents.Execute<IUiParametersReceiver>(
             gameObject,
             null,
-            (handler, eventData) => { handler.OnReceiveStopMessage(); }
+            (handler, eventData) => { handler.OnReceiveLaunchMessage(); }
         );
-
-        SceneInGameController.GetInstance().ClearGame();
     }
+
     #endregion
 }

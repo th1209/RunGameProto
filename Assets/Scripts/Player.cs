@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 // プレイヤーの現在の状態管理クラス.
 
@@ -132,6 +133,19 @@ public class Player : MonoBehaviour, IPausable
     #endregion
 
 
+    #region Private Functions
+
+    private void SendEventToParametersUi()
+    {
+        ExecuteEvents.Execute<IUiParametersReceiver>(
+            target: gameObject,
+            eventData: null,
+            functor: (handler, eventData) => handler.OnReceiveUpdateMessage(this)
+        );
+    }
+
+    #endregion
+
     #region IPausable Implementation
 
     public void Pause()
@@ -171,10 +185,12 @@ public class Player : MonoBehaviour, IPausable
                 break;
             case State.Running:
                 // TODO Animationの更新.
+                SendEventToParametersUi();
                 break;
             case State.Jumping:
             case State.DoubleJumping:
                 // TODO Animationの更新.
+                SendEventToParametersUi();
                 if (_jumpCount <= 0) {
                     _state = State.Running;
                 }

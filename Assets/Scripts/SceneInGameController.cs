@@ -37,6 +37,10 @@ public class SceneInGameController : SingletonMonoBehaviour<SceneInGameControlle
     [SerializeField]
     private UiCallbacks _uiCallbackController = null;
 
+    // パラメタウィンドウ管理クラス.
+    [SerializeField]
+    private UiParametersWindow _uiParametersWindowController = null;
+
     #endregion
 
 
@@ -100,6 +104,7 @@ public class SceneInGameController : SingletonMonoBehaviour<SceneInGameControlle
 
         _uiLayerController.Initialize();
         _uiCallbackController.Initialize();
+        _uiParametersWindowController.Initialize();
         _player.Idle();
     }
 
