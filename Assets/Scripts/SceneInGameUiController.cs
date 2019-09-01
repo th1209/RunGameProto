@@ -103,7 +103,7 @@ public class SceneInGameUiController : MonoBehaviour
 
     public void OnResume()
     {
-        _sceneController.Pause();
+        _sceneController.Resume();
     }
 
     public void OnRetry()

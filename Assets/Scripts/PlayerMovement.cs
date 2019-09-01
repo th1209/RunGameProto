@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Player))]
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, IPausable
 {   
     #region Private Fields
     Player _player = null;
@@ -42,6 +42,21 @@ public class PlayerMovement : MonoBehaviour
     {
         return transform.position.y <= InGameParameters.PlayerGroundedThreshold;
     }
+    #endregion
+
+
+    #region IPausable Implementation
+
+    public void Pause()
+    {
+        GetComponent<Rigidbody2D>().Pause(gameObject);
+    }
+
+    public void Resume()
+    {
+        GetComponent<Rigidbody2D>().Resume(gameObject);
+    }
+
     #endregion
 
 

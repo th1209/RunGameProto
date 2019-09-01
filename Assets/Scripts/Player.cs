@@ -6,7 +6,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(PlayerAnimation))]
 [RequireComponent(typeof(PlayerMovement))]
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IPausable
 {
     #region Public Enums
     public enum State
@@ -129,21 +129,34 @@ public class Player : MonoBehaviour
         _movementComponent.Stop();
     }
 
+    #endregion
+
+
+    #region IPausable Implementation
+
     public void Pause()
     {
-
+        _prevState = _state;
+        _state = State.Pausing;
+        _movementComponent.Pause();
     }
 
     public void Resume()
     {
-
+        Debug.Assert(_prevState != State.Invalid);
+        _state = _prevState;
+        _movementComponent.Resume();
     }
+
     #endregion
 
 
     #region MonoBehaviour CallBacks
     void Start()
     {
+        //Debug.Log(GetComponent<Rigidbody2D>().isKinematic);
+        GetComponent<Rigidbody2D>().isKinematic = true;
+
         _movementComponent = GetComponent<PlayerMovement>();
         Debug.Assert(_movementComponent != null);
         _animationComponent = GetComponent<PlayerAnimation>();
@@ -154,6 +167,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        Debug.LogFormat("{0}, {1}", GetComponent<Rigidbody2D>().isKinematic, GetComponent<Rigidbody2D>().velocity);
+
         switch(_state)
         {
             case State.Idling:
