@@ -11,6 +11,12 @@
 
     public const float PlayerGroundedThreshold = 0.0f;
 
+    public const float StaminaHealAmountMin = 15.0f;
+    public const float StaminaHealAmountMax = 40.0f;
+    public const float StaminaConsumeAmountMin = 10.0f;
+    public const float StaminaConsumeAmountMax = 25.0f;
+
+
     public const float ElapsedTimeMax = 999.0f;
     public const float StageDistanceMax = 9999.0f;
 }
