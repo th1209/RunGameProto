@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Player))]
+[RequireComponent(typeof(PlayerStamina))]
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour, IPausable
 {   
@@ -30,11 +31,15 @@ public class PlayerMovement : MonoBehaviour, IPausable
     #region Private Functions
     private void Run()
     {
-        Vector3 velocity = GetComponent<Rigidbody2D>().velocity;
-        velocity.x = Mathf.Clamp(
-            velocity.x + InGameParameters.PlayerAcceleration * Time.deltaTime,
+        float stamina = GetComponent<PlayerStamina>().GetCurrentValue();
+        float velocityX = PlayerMovementMathFunctions.GetVelocityByStamina(stamina, PlayerMovementMathFunctions.Type.QuadraticEquation01);
+        velocityX = Mathf.Clamp(
+            velocityX,
             InGameParameters.PlayerVelocityMin,
             InGameParameters.PlayerVelocityMax);
+
+        Vector3 velocity = GetComponent<Rigidbody2D>().velocity;
+        velocity.x = velocityX;
         GetComponent<Rigidbody2D>().velocity = velocity;
     }
 

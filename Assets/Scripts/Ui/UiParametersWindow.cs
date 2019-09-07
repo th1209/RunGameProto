@@ -117,7 +117,8 @@ public class UiParametersWindow : SingletonMonoBehaviour<UiParametersWindow>, IU
 
     void UpdateStamina(Player player)
     {
-        //TODO: 後ほど実装する.
+        float stamina = player.GetComponent<PlayerStamina>().GetCurrentValue();
+        _textStamina.text = stamina.ToString("0.0");
     }
 
     void UpdateSpeed(Player player)

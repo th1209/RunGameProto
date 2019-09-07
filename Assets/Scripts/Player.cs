@@ -39,6 +39,9 @@ public class Player : MonoBehaviour, IPausable
     private PlayerMovement _movementComponent = null;
 
     // アニメーション用コンポーネント.
+    private PlayerStamina _staminaComponent = null;
+
+    // アニメーション用コンポーネント.
     private PlayerAnimation _animationComponent = null;
 
     // 状態.
@@ -153,6 +156,7 @@ public class Player : MonoBehaviour, IPausable
         _prevState = _state;
         _state = State.Pausing;
         _movementComponent.Pause();
+        _staminaComponent.Pause();
     }
 
     public void Resume()
@@ -160,6 +164,7 @@ public class Player : MonoBehaviour, IPausable
         Debug.Assert(_prevState != State.Invalid);
         _state = _prevState;
         _movementComponent.Resume();
+        _staminaComponent.Resume();
     }
 
     #endregion
@@ -170,6 +175,8 @@ public class Player : MonoBehaviour, IPausable
     {
         _movementComponent = GetComponent<PlayerMovement>();
         Debug.Assert(_movementComponent != null);
+        _staminaComponent = GetComponent<PlayerStamina>();
+        Debug.Assert(_staminaComponent != null);
         _animationComponent = GetComponent<PlayerAnimation>();
         Debug.Assert(_animationComponent != null);
 
@@ -178,16 +185,18 @@ public class Player : MonoBehaviour, IPausable
 
     void Update()
     {
+        if (_state != State.Pausing) {
+            SendEventToParametersUi();
+        }
+
         switch(_state)
         {
             case State.Idling:
                 break;
             case State.Running:
-                SendEventToParametersUi();
                 break;
             case State.Jumping:
             case State.DoubleJumping:
-                SendEventToParametersUi();
                 if (_jumpCount <= 0) {
                     _state = State.Running;
                 }
