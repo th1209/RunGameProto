@@ -181,29 +181,23 @@ public class Player : MonoBehaviour, IPausable
         switch(_state)
         {
             case State.Idling:
-                // TODO Animationの更新.
                 break;
             case State.Running:
-                // TODO Animationの更新.
                 SendEventToParametersUi();
                 break;
             case State.Jumping:
             case State.DoubleJumping:
-                // TODO Animationの更新.
                 SendEventToParametersUi();
                 if (_jumpCount <= 0) {
                     _state = State.Running;
                 }
                 break;
             case State.Damaged:
-                // TODO Animationの更新.
                 // TODO 残りダメージ中時間を減算する処理.
                 break;
             case State.Winning:
-                // TODO Animationの更新.
                 break;
             case State.Losing:
-                // TODO Animationの更新.
                 break;
             case State.Pausing:
                 break;
