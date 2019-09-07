@@ -25,7 +25,7 @@ public interface IUiParametersReceiver : IEventSystemHandler
 
 
 // インゲームシーンにおいて､各種変数値を受け取って表示するクラス.
-public class UiParametersWindow : MonoBehaviour, IUiParametersReceiver, IPausable
+public class UiParametersWindow : SingletonMonoBehaviour<UiParametersWindow>, IUiParametersReceiver, IPausable
 {
     #region Private Enums
     public enum State
@@ -88,7 +88,7 @@ public class UiParametersWindow : MonoBehaviour, IUiParametersReceiver, IPausabl
         _isPaused = false;
 
         _textElapsedTime.text = "0.0";
-        _textDistance.text = "0.0";
+        _textDistance.text = "0.0" + "/" + "0.0";
         _textStamina.text = InGameParameters.PlayerStaminaMin.ToString("0.0");
         _textSpeed.text = InGameParameters.PlayerVelocityMin.ToString("0.0");
     }
@@ -109,7 +109,10 @@ public class UiParametersWindow : MonoBehaviour, IUiParametersReceiver, IPausabl
     {
         Vector2 pos = player.gameObject.GetComponent<Transform>().position;
         Debug.Assert(0.0f <= pos.x && pos.x <= InGameParameters.StageDistanceMax);
-        _textDistance.text = pos.x.ToString("0.0");
+
+        float start = Mathf.Max(pos.x - _startPosition.x, 0.0f);
+        float goal = _goalPosition.x - _startPosition.x;
+        _textDistance.text = start.ToString("0.0") + "/" + goal.ToString("0.0");
     }
 
     void UpdateStamina(Player player)
@@ -121,7 +124,7 @@ public class UiParametersWindow : MonoBehaviour, IUiParametersReceiver, IPausabl
     {
         Vector2 velocity = player.gameObject.GetComponent<Rigidbody2D>().velocity;
         Debug.Assert(0.0f <= velocity.x);
-        _textDistance.text = velocity.x.ToString("0.0");
+        _textSpeed.text = velocity.x.ToString("0.0");
     }
 
     #endregion
@@ -131,33 +134,29 @@ public class UiParametersWindow : MonoBehaviour, IUiParametersReceiver, IPausabl
 
     public void OnReceiveStartPositionMessage(Vector2 position)
     {
-        Debug.Log("OnReceiveStartPositionMessage");
         _startPosition = position;
     }
 
     public void OnReceiveGoalPositionMessage(Vector2 position)
     {
-        Debug.Log("OnReceiveGoalPositionMessage");
         _goalPosition = position;
     }
 
     public void OnReceiveLaunchMessage()
     {
-        Debug.Log("OnReceiveLaunchMessage");
         _state = State.Launched;
         _elapsedTime = 0.0f;
     }
 
     public void OnReceiveStopMessage()
     {
-        Debug.Log("OnReceiveStopMessage");
-        Debug.Assert(false);
         _state = State.Stopped;
+        float goal = _goalPosition.x - _startPosition.x;
+        _textDistance.text = goal.ToString("0.0") + "/" + goal.ToString("0.0");
     }
 
     public void OnReceiveUpdateMessage(Player player)
     {
-        Debug.Log("OnReceiveUpdateMessage");
         if (_state == State.NotLaunched) {
             return;
         }

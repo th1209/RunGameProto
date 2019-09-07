@@ -138,7 +138,7 @@ public class Player : MonoBehaviour, IPausable
     private void SendEventToParametersUi()
     {
         ExecuteEvents.Execute<IUiParametersReceiver>(
-            target: gameObject,
+            target: UiParametersWindow.GetInstance().gameObject,
             eventData: null,
             functor: (handler, eventData) => handler.OnReceiveUpdateMessage(this)
         );

@@ -12,7 +12,7 @@ public class GameClearLine : MonoBehaviour, IObstacle
     void Start()
     {
         ExecuteEvents.Execute<IUiParametersReceiver>(
-            target: gameObject,
+            target: UiParametersWindow.GetInstance().gameObject,
             eventData: null,
             functor: (handler, eventData) => handler.OnReceiveGoalPositionMessage(gameObject.transform.position)
         );
@@ -25,7 +25,7 @@ public class GameClearLine : MonoBehaviour, IObstacle
         }
 
         ExecuteEvents.Execute<IUiParametersReceiver>(
-            gameObject,
+            UiParametersWindow.GetInstance().gameObject,
             null,
             (handler, eventData) => { handler.OnReceiveStopMessage(); }
         );

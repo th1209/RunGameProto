@@ -69,12 +69,14 @@ public class SceneInGameController : SingletonMonoBehaviour<SceneInGameControlle
     public void Pause()
     {
         _uiLayerController.Pause();
+        _uiParametersWindowController.Pause();
         _player.Pause();
     }
 
     public void Resume()
     {
         _uiLayerController.Resume();
+        _uiParametersWindowController.Resume();
         _player.Resume();
     }
 

@@ -16,7 +16,7 @@ public class GameStartLine : MonoBehaviour, IObstacle
     void Start()
     {
         ExecuteEvents.Execute<IUiParametersReceiver>(
-            target: gameObject,
+            target: UiParametersWindow.GetInstance().gameObject,
             eventData: null,
             functor: (handler, eventData) => handler.OnReceiveStartPositionMessage(gameObject.transform.position)
         );
@@ -29,7 +29,7 @@ public class GameStartLine : MonoBehaviour, IObstacle
         }
 
         ExecuteEvents.Execute<IUiParametersReceiver>(
-            gameObject,
+            UiParametersWindow.GetInstance().gameObject,
             null,
             (handler, eventData) => { handler.OnReceiveLaunchMessage(); }
         );
