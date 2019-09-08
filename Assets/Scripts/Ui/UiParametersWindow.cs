@@ -108,7 +108,7 @@ public class UiParametersWindow : SingletonMonoBehaviour<UiParametersWindow>, IU
     void UpdateDistance(Player player)
     {
         Vector2 pos = player.gameObject.GetComponent<Transform>().position;
-        Debug.Assert(0.0f <= pos.x && pos.x <= InGameParameters.StageDistanceMax);
+        Debug.Assert(/*0.0f <= pos.x &&*/ pos.x <= InGameParameters.StageDistanceMax);
 
         float start = Mathf.Max(pos.x - _startPosition.x, 0.0f);
         float goal = _goalPosition.x - _startPosition.x;
