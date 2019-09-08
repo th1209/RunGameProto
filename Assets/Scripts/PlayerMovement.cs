@@ -45,7 +45,6 @@ public class PlayerMovement : MonoBehaviour, IPausable
             velocityX,
             InGameParameters.PlayerVelocityMin,
             InGameParameters.PlayerVelocityMax);
-
         Vector3 velocity = GetComponent<Rigidbody2D>().velocity;
         velocity.x = velocityX;
         GetComponent<Rigidbody2D>().velocity = velocity;
