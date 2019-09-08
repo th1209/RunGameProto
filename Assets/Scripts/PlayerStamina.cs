@@ -50,7 +50,8 @@ public class PlayerStamina : MonoBehaviour, IPausable
     #region Private Functions
     void Start()
     {
-        // TODO: 保存された設定値を見て､設定値を復元する処理を追加する
+        _healAmountPerSec = GameConfigRepository.LoadStaminaHealAmount();
+        _consumeAmountPerTap = GameConfigRepository.LoadStaminaConsumeAmount();
         _currentAmount = InGameParameters.PlayerStaminaMax;
         _isPause = false;
     }

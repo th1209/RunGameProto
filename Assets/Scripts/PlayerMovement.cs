@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour, IPausable
     private void Run()
     {
         float stamina = GetComponent<PlayerStamina>().GetCurrentValue();
-        float velocityX = PlayerMovementMathFunctions.GetVelocityByStamina(stamina, PlayerMovementMathFunctions.Type.QuadraticEquation01);
+        float velocityX = PlayerMovementMathFunctions.GetVelocityByStamina(stamina, GameConfigRepository.LoadMovementEquationType());
         velocityX = Mathf.Clamp(
             velocityX,
             InGameParameters.PlayerVelocityMin,
