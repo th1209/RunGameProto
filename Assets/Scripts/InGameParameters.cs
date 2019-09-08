@@ -5,7 +5,7 @@
     public const float PlayerStaminaMin = 0.0f;
     public const float PlayerStaminaMax = 100.0f;
     public const float PlayerAcceleration = 7.5f;
-    public const float PlayerJumpAcceleration = 7.0f;
+    public const float PlayerJumpAcceleration = 10.0f;
 
     public const int MaxJumpCount = 2;
 

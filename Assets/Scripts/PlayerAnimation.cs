@@ -45,8 +45,7 @@ public class PlayerAnimation : MonoBehaviour
     void Update()
     {
         if (_player.GetState() == Player.State.Running ||
-            _player.GetState() == Player.State.Jumping ||
-            _player.GetState() == Player.State.DoubleJumping
+            _player.GetState() == Player.State.Jumping
         ) {
             GetComponent<Animator>().SetFloat(AnimatorKeyNameSpeed, gameObject.GetComponent<Rigidbody2D>().velocity.x);
         } else if (_player.GetState() == Player.State.Idling ||
@@ -56,9 +55,7 @@ public class PlayerAnimation : MonoBehaviour
             GetComponent<Animator>().SetFloat(AnimatorKeyNameSpeed, 0.0f);
         }
 
-        if (_player.GetState() == Player.State.Jumping ||
-            _player.GetState() == Player.State.DoubleJumping
-        ) {
+        if (_player.GetState() == Player.State.Jumping) {
             GetComponent<Animator>().SetBool(AnimatorKeyNameFlying, true);
         } else {
             GetComponent<Animator>().SetBool(AnimatorKeyNameFlying, false);

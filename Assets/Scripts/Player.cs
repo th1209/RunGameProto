@@ -18,8 +18,6 @@ public class Player : MonoBehaviour, IPausable
         Running,
         // ジャンプ中.
         Jumping,
-        // 2段ジャンプ中.
-        DoubleJumping,
         // 被ダメージ中.
         Damaged,
         // ゲーム終了停止中(勝利演出).
@@ -72,7 +70,7 @@ public class Player : MonoBehaviour, IPausable
     public bool IsInvincible()
     {
         return _restInvincibleTime > 0.0f;
-    }
+    } 
 
     public void Idle()
     {
@@ -86,7 +84,11 @@ public class Player : MonoBehaviour, IPausable
 
     public void Jump()
     {
-        if (_state != State.Running && _state != State.Jumping ) {
+        if (! _movementComponent.IsGrounded()) {
+            return;
+        }
+
+        if (_state != State.Running) {
             return;
         }
 
@@ -98,9 +100,6 @@ public class Player : MonoBehaviour, IPausable
 
         if (_jumpCount == 1) {
             _state = State.Jumping;
-        }
-        if (_jumpCount == InGameParameters.MaxJumpCount) {
-            _state = State.DoubleJumping;
         }
 
         _movementComponent.Jump();
@@ -196,7 +195,6 @@ public class Player : MonoBehaviour, IPausable
             case State.Running:
                 break;
             case State.Jumping:
-            case State.DoubleJumping:
                 if (_jumpCount <= 0) {
                     _state = State.Running;
                 }

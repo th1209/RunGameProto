@@ -20,6 +20,11 @@ public class PlayerMovement : MonoBehaviour, IPausable
         GetComponent<Rigidbody2D>().velocity = velocity;
     }
 
+    public bool IsGrounded()
+    {
+        return transform.position.y <= InGameParameters.PlayerGroundedThreshold;
+    }
+
     public void Stop()
     {
         GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
@@ -41,11 +46,6 @@ public class PlayerMovement : MonoBehaviour, IPausable
         Vector3 velocity = GetComponent<Rigidbody2D>().velocity;
         velocity.x = velocityX;
         GetComponent<Rigidbody2D>().velocity = velocity;
-    }
-
-    private bool IsGrounded()
-    {
-        return transform.position.y <= InGameParameters.PlayerGroundedThreshold;
     }
     #endregion
 
@@ -74,9 +74,6 @@ public class PlayerMovement : MonoBehaviour, IPausable
 
     void Update()
     {
-        // TODO:
-        // 後ほど床との衝突判定に処理を引っ越す.
-        // (ジャンプ直後時にisGround判定されて､ジャンプ回数がリセットされる不具合を回避するため)
         if (IsGrounded()) {
             _player.ResetJumpCount();
         }
@@ -85,8 +82,7 @@ public class PlayerMovement : MonoBehaviour, IPausable
     void FixedUpdate()
     {
         if (_player.GetState() != Player.State.Running &&
-            _player.GetState() != Player.State.Jumping &&
-            _player.GetState() != Player.State.DoubleJumping
+            _player.GetState() != Player.State.Jumping
         ) {
             return;
         }
