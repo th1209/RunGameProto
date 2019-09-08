@@ -4,6 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Player))]
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(SpriteBlinkComponent))]
 public class PlayerAnimation : MonoBehaviour
 {
     #region Private Fields
@@ -21,7 +22,7 @@ public class PlayerAnimation : MonoBehaviour
 
     #region Public Functions
 
-    void Damaged()
+    public void Damaged()
     {
         if (_player.GetState() == Player.State.Winning ||
             _player.GetState() == Player.State.Losing) {
@@ -29,6 +30,12 @@ public class PlayerAnimation : MonoBehaviour
         }
 
         GetComponent<Animator>().SetTrigger(AnimatorKeyNameDamaged);
+        GetComponent<SpriteBlinkComponent>().StartBlink();
+    }
+
+    public void EndDamaged()
+    {
+        GetComponent<SpriteBlinkComponent>().StopBlink();
     }
 
     #endregion

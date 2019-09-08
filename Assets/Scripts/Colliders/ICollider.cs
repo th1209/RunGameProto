@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// 様々な障害物の基底インタフェース.
-public interface IObstacle
+// 様々な衝突判定器の基底インタフェース.
+public interface ICollider
 {
 
 }

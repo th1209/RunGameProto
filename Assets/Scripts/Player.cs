@@ -52,7 +52,7 @@ public class Player : MonoBehaviour, IPausable
     private float _restInvincibleTime = 0.0f;
 
     // ダメージ中残り時間.
-    private float _restDamageTime = 0.0f;
+    private float _restDamagedTime = 0.0f;
 
     // 現在のジャンプ回数.
     private int _jumpCount = 0;
@@ -117,7 +117,14 @@ public class Player : MonoBehaviour, IPausable
 
     public void Damaged()
     {
+        if (_state == State.Damaged) {
+            return;
+        }
 
+        _prevState = _state;
+        _state = State.Damaged;
+        _restDamagedTime = InGameParameters.PlayerDamagedTime;
+        _animationComponent.Damaged();
     }
 
     public void Win()
@@ -200,7 +207,12 @@ public class Player : MonoBehaviour, IPausable
                 }
                 break;
             case State.Damaged:
-                // TODO 残りダメージ中時間を減算する処理.
+                _restDamagedTime -= Time.deltaTime;
+                if (_restDamagedTime < 0.0f) {
+                    _restDamagedTime = 0.0f;
+                    _state = _prevState;
+                    _animationComponent.EndDamaged();
+                }
                 break;
             case State.Winning:
                 break;

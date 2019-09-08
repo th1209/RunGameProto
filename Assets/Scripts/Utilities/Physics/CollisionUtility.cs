@@ -24,4 +24,11 @@ public static class CollisionUtility
         // TODO: PlayerのI/Fが決まったら､残りのタイプ判定を実装する.
         return CollisionType.OwnPlayer;
     }
+
+    public static Player GetPlayerFromCollider2D(Collider2D other)
+    {
+        Player player = other.gameObject.GetComponent<Player>();
+        Debug.Assert(player != null);
+        return player;
+    }
 }

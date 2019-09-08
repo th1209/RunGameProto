@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(Collider2D))]
-public class GameClearLine : MonoBehaviour, IObstacle
+public class GameClearLine : GameEventCollider
 {
     #region MonoBehaviour CallBacks
 

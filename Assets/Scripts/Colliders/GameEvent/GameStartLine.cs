@@ -3,14 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(Collider2D))]
-public class GameStartLine : MonoBehaviour, IObstacle
+public class GameStartLine : GameEventCollider
 {
-    // Debug
-    [SerializeField]
-    GameObject root = null;
-
     #region MonoBehaviour CallBacks
 
     void Start()

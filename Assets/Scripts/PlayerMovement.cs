@@ -38,6 +38,9 @@ public class PlayerMovement : MonoBehaviour, IPausable
     {
         float stamina = GetComponent<PlayerStamina>().GetCurrentValue();
         float velocityX = PlayerMovementMathFunctions.GetVelocityByStamina(stamina, GameConfigRepository.LoadMovementEquationType());
+        if (_player.GetState() == Player.State.Damaged) {
+            velocityX += InGameParameters.PlayerMinusVelocityWhenDamaged;
+        }
         velocityX = Mathf.Clamp(
             velocityX,
             InGameParameters.PlayerVelocityMin,
@@ -82,7 +85,8 @@ public class PlayerMovement : MonoBehaviour, IPausable
     void FixedUpdate()
     {
         if (_player.GetState() != Player.State.Running &&
-            _player.GetState() != Player.State.Jumping
+            _player.GetState() != Player.State.Jumping &&
+            _player.GetState() != Player.State.Damaged
         ) {
             return;
         }
